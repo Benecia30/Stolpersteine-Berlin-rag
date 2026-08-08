@@ -1,1 +1,3 @@
 # Stolpersteine-Berlin-rag
+
+working on it step by step...
