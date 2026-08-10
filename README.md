@@ -2,7 +2,6 @@
 
 A question-answering system about the **Stolpersteine** ("stumbling stones") in Berlin — small memorial plaques placed outside the last freely chosen homes of victims of Nazi persecution. Ask a question in plain language and get an answer grounded in real records, with sources you can check.
 
-Built for the [DataTalksClub LLM Zoomcamp 2025](https://github.com/DataTalksClub/llm-zoomcamp) course project.
 
 ---
 
@@ -185,6 +184,8 @@ Dockerfile
 ## 9. What's Not Included (and why)
 
 To stay focused on a working, well-evaluated system before the deadline, the following were deliberately left out: re-ranking, query rewriting, agent/graph-based RAG, OCR, and swapping to a larger embedding model. These are natural next steps but weren't needed to answer the core project questions well.
+
+**Future work:** the dataset currently covers 7 of Berlin's 12 districts (10,229 records). The remaining districts (e.g. Spandau, Reinickendorf, Marzahn-Hellersdorf, Lichtenberg, Treptow-Köpenick) can be added by re-running the same scrape → filter → index pipeline — the `stolperstein_id` assignment logic was specifically designed to support this without disturbing existing IDs (see the bug fix noted during the 3→7 district expansion).
 
 ---
 
