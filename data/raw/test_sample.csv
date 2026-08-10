@@ -1,0 +1,6 @@
+Vorname,Nachname,Geburtsjahr,Längengrad,Breitengrad,Straße,Hausnummer,Postleitzahl,Straße + Hausnummer,Ortsteil,Ortsteil-ID,Bezirk,Bezirk-ID,Virtueller-Stein,Url zu Biografie,stolperstein_id
+Hedwig,Abraham,1861,13.4105551,52.513028,Märkisches Ufer,20,10179.0,Märkisches Ufer 20,Mitte,62,Mitte,61.0,0,https://www.stolpersteine-berlin.de/biografie/1,stolperstein_00000
+Richard,Abraham,1895,13.40811,52.51201,Wallstraße,84,10179.0,Wallstraße 84,Mitte,62,Mitte,61.0,0,https://www.stolpersteine-berlin.de/biografie/2,stolperstein_00001
+Herta,Abraham,1895,13.40811,52.51201,Wallstraße,84,10179.0,Wallstraße 84,Mitte,62,Mitte,61.0,0,https://www.stolpersteine-berlin.de/biografie/3,stolperstein_00002
+Ruth Nelly,Abraham,1934,13.40811,52.51201,Wallstraße,84,10179.0,Wallstraße 84,Mitte,62,Mitte,61.0,0,https://www.stolpersteine-berlin.de/biografie/4,stolperstein_00003
+Edmond,Adout,1889,13.336152430001,52.521802710027,Dortmunder Str.,9,10555.0,Dortmunder Str. 9,Moabit,63,Mitte,61.0,0,https://www.stolpersteine-berlin.de/biografie/5,stolperstein_00004

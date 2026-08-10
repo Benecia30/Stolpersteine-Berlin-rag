@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Logs / scrape artifacts
+scrape.log
+
+# Runtime monitoring data
+.env
+data/cache/
+data/processed/
+logs/*.jsonl

@@ -1,0 +1,13 @@
+.git
+.github
+.venv
+__pycache__
+*.pyc
+.env
+
+data/cache/
+logs/*.jsonl
+
+scrape.log
+
+app_before_monitoring.py

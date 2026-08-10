@@ -1,0 +1,17 @@
+Bezirk
+Charlottenburg-Wilmersdorf    3807
+Mitte                         2104
+Tempelhof-Schöneberg          1294
+Friedrichshain-Kreuzberg      1161
+Pankow                         928
+Steglitz-Zehlendorf            670
+Neukölln                       265
+Reinickendorf                  178
+Treptow-Köpenick               155
+Lichtenberg                    139
+Spandau                         86
+Marzahn-Hellersdorf             40
+Name: count, dtype: int64
+---
+Total: 10827
+Num districts: 12
