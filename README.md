@@ -2,6 +2,8 @@
 
 A question-answering system about the **Stolpersteine** ("stumbling stones") in Berlin — small memorial plaques placed outside the last freely chosen homes of victims of Nazi persecution. Ask a question in plain language and get an answer grounded in real records, with sources you can check.
 
+Built for the [DataTalksClub LLM Zoomcamp 2025](https://github.com/DataTalksClub/llm-zoomcamp) course project.
+
 ---
 
 ## 1. The Problem
@@ -18,6 +20,8 @@ Charlottenburg-Wilmersdorf, Mitte, Tempelhof-Schöneberg, Friedrichshain-Kreuzbe
 ## 2. How It Works (Architecture)
 
 ![Architecture diagram](docs/architecture.svg)
+
+*Teal = retrieval, coral = generation, gray = entry/exit points.*
 
 ```
 User question
@@ -100,7 +104,27 @@ A second page in the app (**Monitoring Dashboard**) shows:
 
 ---
 
-## 6. Running It
+## 6. Screenshots
+
+**Chat interface**
+
+![Chat example](docs/screenshots/chat-example.png)
+
+**A known limitation** — the system correctly hedges on a question about a non-entity, but still lists names before the caveat (see section 4 for details):
+
+![Chat limitation example](docs/screenshots/chat-limitation.png)
+
+**Monitoring dashboard**
+
+![Dashboard overview](docs/screenshots/dashboard-overview.png)
+
+**Failure analysis view**
+
+![Dashboard failure analysis](docs/screenshots/dashboard-failures.png)
+
+---
+
+## 7. Running It
 
 ### Requirements
 - Python (managed with `uv`)
@@ -115,15 +139,17 @@ uv sync
 cp .env.example .env   # add your GROQ_API_KEY (no quotes around the key)
 ```
 
-### Build the data & indexes (first time only)
+### Build the indexes (first time only)
+
+The dataset is already included in `data/raw/` (structured facts, CC-BY licensed) — no scraping needed. Just build the documents and indexes from it:
 
 ```bash
-uv run scripts/02_filter_districts.py
-uv run scripts/03_scrape_biographies.py
 uv run scripts/04_build_documents.py
 uv run scripts/05_build_bm25_index.py
 uv run scripts/06_build_embeddings.py
 ```
+
+> Re-scraping is optional and only needed if you want to refresh the data from the source site: `uv run scripts/02_filter_districts.py` then `uv run scripts/03_scrape_biographies.py`. This can take a while and hits the source website directly.
 
 ### Run the app
 
@@ -142,7 +168,7 @@ Then open `http://localhost:8501`.
 
 ---
 
-## 7. Project Structure
+## 8. Project Structure
 
 ```
 scripts/               data pipeline (scrape -> filter -> build -> index)
@@ -156,12 +182,12 @@ Dockerfile
 
 ---
 
-## 8. What's Not Included (and why)
+## 9. What's Not Included (and why)
 
 To stay focused on a working, well-evaluated system before the deadline, the following were deliberately left out: re-ranking, query rewriting, agent/graph-based RAG, OCR, and swapping to a larger embedding model. These are natural next steps but weren't needed to answer the core project questions well.
 
 ---
 
-## 9. Acknowledgements
+## 10. Acknowledgements
 
 Biographical data sourced from public Stolpersteine district records (CC-BY). Narrative biography text is excluded from this repository due to copyright; only structured facts are included.
