@@ -17,6 +17,8 @@ Charlottenburg-Wilmersdorf, Mitte, Tempelhof-Schöneberg, Friedrichshain-Kreuzbe
 
 ## 2. How It Works (Architecture)
 
+![Architecture diagram](docs/architecture.svg)
+
 ```
 User question
      |
