@@ -29,7 +29,7 @@ Where to find each rubric item in this README:
 | Monitoring | Section 5 + Section 6 dashboard screenshots — feedback + 5+ charts |
 | Containerization | Section 7 — Dockerfile provided |
 | Reproducibility | Section 7 — setup steps, dataset included, versions pinned via `uv.lock` |
-| Best practices: hybrid search | Section 2 + Section 4 — evaluated and used |
+| Best practices: hybrid search + re-ranking evaluation | Section 2 + Section 4 — hybrid evaluated and used; re-ranking evaluated and rejected with evidence |
 
 ---
 
@@ -86,8 +86,11 @@ Tested on 11 hand-labeled questions across all 7 districts:
 | BM25 only | 0.382 | 0.194 | 0.506 | 0.545 |
 | Dense (FAISS) only | 0.400 | 0.216 | 0.636 | 0.818 |
 | **Hybrid (BM25 + FAISS)** | **0.418** | **0.264** | **0.705** | **0.909** |
+| Hybrid + re-ranking | 0.418 | 0.255 | 0.667 | 0.727 |
 
-**Hybrid search wins clearly**, especially on MRR and hit rate (how often the right document shows up, and how high it ranks) — the metrics that matter most for a Q&A system. It also held up well as the dataset grew from 3 to 7 districts, while the individual methods got worse on their own.
+**Hybrid RRF is used in production** — it wins clearly on MRR and hit rate (how often the right document shows up, and how high it ranks), the metrics that matter most for a Q&A system. It also held up well as the dataset grew from 3 to 7 districts, while the individual methods got worse on their own.
+
+**Re-ranking was evaluated and rejected.** A multilingual cross-encoder (`cross-encoder/mmarco-mMiniLMv2-L12-H384-v1`, chosen over the more common English-only `ms-marco-MiniLM` since this dataset is German-language) was used to re-score the top 25 hybrid candidates down to 5. It made results *worse*, not better — MRR dropped from 0.705 to 0.667, hit rate from 0.909 to 0.727. Likely explanation: the cross-encoder is trained on general passage retrieval (mMARCO), not short, name-and-date-dense biographical facts, so it's not well-calibrated for this domain. Plain hybrid RRF was kept in production based on this result.
 
 Known weak spots: the system doesn't reliably use house numbers to narrow results, and it can confuse similar-sounding names and place names (e.g. "Therese" vs "Theresienstadt").
 
@@ -211,7 +214,9 @@ Dockerfile
 
 ## 9. What's Not Included (and why)
 
-To stay focused on a working, well-evaluated system before the deadline, the following were deliberately left out: re-ranking, query rewriting, agent/graph-based RAG, OCR, and swapping to a larger embedding model. These are natural next steps but weren't needed to answer the core project questions well.
+To stay focused on a working, well-evaluated system before the deadline, the following were deliberately left out: query rewriting, agent/graph-based RAG, OCR, and swapping to a larger embedding model. These are natural next steps but weren't needed to answer the core project questions well.
+
+**Re-ranking was tried, not skipped** — see Section 4 for the full comparison. A multilingual cross-encoder was evaluated on top of hybrid retrieval and made results measurably worse (MRR 0.705 → 0.667), so it was not adopted. This is treated as a real finding rather than a gap: for this dataset's short, name-dense records, the existing hybrid RRF fusion outperforms a general-purpose re-ranker.
 
 **Future work:** the dataset currently covers 7 of Berlin's 12 districts (10,229 records). The remaining districts (e.g. Spandau, Reinickendorf, Marzahn-Hellersdorf, Lichtenberg, Treptow-Köpenick) can be added by re-running the same scrape → filter → index pipeline — the `stolperstein_id` assignment logic was specifically designed to support this without disturbing existing IDs (see the bug fix noted during the 3→7 district expansion).
 

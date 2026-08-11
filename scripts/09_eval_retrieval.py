@@ -29,6 +29,12 @@ spec = importlib.util.spec_from_file_location(
 hr = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(hr)
 
+spec2 = importlib.util.spec_from_file_location(
+    "rerank", ROOT / "scripts" / "11_rerank.py"
+)
+rr = importlib.util.module_from_spec(spec2)
+spec2.loader.exec_module(rr)
+
 K = 5
 
 
@@ -120,10 +126,29 @@ def main():
         fused = hr.reciprocal_rank_fusion(bm25_results, dense_results)
         return [d for d, _ in fused]
 
+    # --- load doc text + define the rerank search fn -------------
+    doc_text = {}
+    with open(ROOT / "data" / "processed" / "documents.jsonl", encoding="utf-8") as f:
+        for line in f:
+            row = json.loads(line)
+            doc_text[row["doc_id"]] = row["text_bm25"]
+
+    def hybrid_rerank(query, pool=25):
+        bm25_results = hr.bm25_search(query, bm25, doc_ids, hr.BM25_TOP_K)
+        dense_results = hr.dense_search(query, index, faiss_idx_to_doc_id, model, hr.DENSE_TOP_K)
+        fused = hr.reciprocal_rank_fusion(bm25_results, dense_results)
+        candidates = [
+            {"doc_id": d, "text_bm25": doc_text.get(d, "")}
+            for d, _ in fused[:pool]
+        ]
+        reranked = rr.rerank(query, candidates, top_n=K, text_field="text_bm25")
+        return [c["doc_id"] for c in reranked]
+
+
     run_eval(queries, bm25_only, "BM25-only")
     run_eval(queries, dense_only, "Dense-only")
     run_eval(queries, hybrid, "Hybrid RRF")
-
+    run_eval(queries, hybrid_rerank, "Hybrid + Rerank")  
 
 if __name__ == "__main__":
     main()
