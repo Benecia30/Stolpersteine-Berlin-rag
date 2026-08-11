@@ -119,6 +119,8 @@ A second page in the app (**Monitoring Dashboard**) shows:
 
 ![Dashboard overview](docs/screenshots/dashboard-overview.png)
 
+Note: the helpful rate above reflects a small early-testing sample (10 queries), not overall system accuracy — see Section 4 for the full retrieval evaluation (0.909 hit rate) and generation evaluation (8/9 perfect judge scores), which are based on a larger, dedicated evaluation set.
+
 **Failure analysis view**
 
 ![Dashboard failure analysis](docs/screenshots/dashboard-failures.png)
