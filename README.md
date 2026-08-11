@@ -111,7 +111,9 @@ A second page in the app (**Monitoring Dashboard**) shows:
 
 **A known limitation** — the system correctly hedges on a question about a non-entity, but still lists names before the caveat (see section 4 for details):
 
-![Chat limitation example](docs/screenshots/chat-limitation.png)
+![Chat limitation example](docs/screenshots/chat-limitation-1.png)
+
+![Chat limitation example](docs/screenshots/chat-limitation-2.png)
 
 **Monitoring dashboard**
 
