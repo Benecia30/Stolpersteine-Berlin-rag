@@ -14,6 +14,23 @@ This project builds a **RAG (Retrieval-Augmented Generation) system** that lets 
 **Data covers 7 Berlin districts, 10,229 individual memorial records:**
 Charlottenburg-Wilmersdorf, Mitte, Tempelhof-Schöneberg, Friedrichshain-Kreuzberg, Pankow, Steglitz-Zehlendorf, Neukölln.
 
+### README Map
+
+Where to find each rubric item in this README:
+
+| Criteria | Where to look |
+|---|---|
+| Problem description | Section 1 |
+| Retrieval flow (knowledge base + LLM) | Section 2 |
+| Retrieval evaluation | Section 4 — Retrieval table |
+| LLM evaluation | Section 4 — Generation + model choice |
+| Interface | Section 6 (screenshots), Section 7 (run instructions) — Streamlit app |
+| Ingestion pipeline | Section 3 — manual scripts, semi-automated |
+| Monitoring | Section 5 + Section 6 dashboard screenshots — feedback + 5+ charts |
+| Containerization | Section 7 — Dockerfile provided |
+| Reproducibility | Section 7 — setup steps, dataset included, versions pinned via `uv.lock` |
+| Best practices: hybrid search | Section 2 + Section 4 — evaluated and used |
+
 ---
 
 ## 2. How It Works (Architecture)
@@ -111,9 +128,9 @@ A second page in the app (**Monitoring Dashboard**) shows:
 
 **A known limitation** — the system correctly hedges on a question about a non-entity, but still lists names before the caveat (see section 4 for details):
 
-![Chat limitation example](docs/screenshots/chat-limitation-1.png)
+![Question asked](docs/screenshots/chat-limitation-1.png)
 
-![Chat limitation example](docs/screenshots/chat-limitation-2.png)
+![Answer with hedge and sources](docs/screenshots/chat-limitation-2.png)
 
 **Monitoring dashboard**
 
@@ -136,7 +153,7 @@ Note: the helpful rate above reflects a small early-testing sample (10 queries),
 ### Setup
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/Benecia30/Stolpersteine-Berlin-rag.git
 cd Stolpersteine-Berlin-rag
 uv sync
 cp .env.example .env   # add your GROQ_API_KEY (no quotes around the key)
