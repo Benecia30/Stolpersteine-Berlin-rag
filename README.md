@@ -99,9 +99,16 @@ Used an LLM-as-judge to score answers on groundedness, citation accuracy, and ap
 - The judge itself was checked first: it was given 5 deliberately broken answers (fake citations, wrong facts, missing hedges) and **correctly caught all 5** — so the perfect scores on real answers can be trusted, not just rubber-stamped.
 - One known weak spot: when asked about a non-existent entity (e.g. a metadata field mistaken for a person's name), the system still lists plausible-sounding names before admitting there's no clear answer, instead of saying "not found" up front.
 
-### Model choice
+### Model choice — two LLMs compared
 
-`llama-3.3-70b-versatile` (Groq) was kept over a newer suggested model after testing showed the newer one corrupted citations and gave overly cautious answers — evaluation, not assumption, decided this.
+Two Groq-hosted models were evaluated for the generation step:
+
+| Model | Result |
+|---|---|
+| `llama-3.3-70b-versatile` | Citations accurate and consistent; appropriately hedges on unclear questions |
+| `gpt-oss-120b` (Groq's suggested newer model) | Citations frequently corrupted or malformed; answers were over-conservative, refusing to answer even when the retrieved context clearly supported one |
+
+**`llama-3.3-70b-versatile` was kept** based on this comparison — a concrete evaluation, not a default choice, decided which model made it into the final system.
 
 ---
 
